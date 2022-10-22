@@ -2,6 +2,7 @@ package com.example.numad22fa_group24;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,6 +29,8 @@ public class weather extends AppCompatActivity {
     EditText cityName;
     URL urlLocation;
     URL urlWeather;
+    boolean end;
+
 
     Thread t1, t2;
     private static final String TAG = "WebServiceActivity";
@@ -55,21 +58,23 @@ public class weather extends AppCompatActivity {
                 if(city.length() == 0) city = "San Jose";
                 //Toast.makeText(getBaseContext(), "You are now checking the weather at "+ city,Toast.LENGTH_SHORT).show();
 
-                final ProgressDialog progress = new ProgressDialog(weather.this);
-                progress.setTitle("Connecting");
-                progress.setMessage("Getting you the weather of " + city +" ...");
-                progress.show();
-
-                Runnable progressRunnable = new Runnable() {
-
-                    @Override
-                    public void run() {
-                        progress.cancel();
-                    }
-                };
-
-                Handler pdCanceller = new Handler();
-                pdCanceller.postDelayed(progressRunnable, 4000);
+//                final ProgressDialog progress = new ProgressDialog(weather.this);
+//                progress.setTitle("Connecting");
+//                progress.setMessage("Getting you the weather of " + city +" ...");
+//                progress.show();
+//
+//                Runnable progressRunnable = new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        progress.cancel();
+//                    }
+//                };
+//
+//                Handler pdCanceller = new Handler();
+//                pdCanceller.postDelayed(progressRunnable, 4000);
+                DialogThread dialog = new DialogThread(city);
+                dialog.run();
                 ExampleThread thread = new ExampleThread(city);
                thread.run();
             }
@@ -119,10 +124,15 @@ public class weather extends AppCompatActivity {
                     results[5] = main.getString("humidity");
                     Log.i(TAG, response);
                     String[] finalResults = results;
-                    Thread.sleep(4000);
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+//                            try {
+//                                Thread.sleep(6000);
+//                            } catch (InterruptedException e) {
+//                                e.printStackTrace();
+//                            }
 
                             temp.setText(finalResults[2]);
                             max.setText(finalResults[4]);
@@ -144,6 +154,36 @@ public class weather extends AppCompatActivity {
     private String convertStreamToString(InputStream is) {
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next().replace(",", ",\n") : "";
+    }
+
+
+    class DialogThread extends Thread{
+        String city;
+
+        DialogThread(String city){
+            this.city = city;
+        }
+
+        @Override
+        public void run(){
+            final ProgressDialog progress = new ProgressDialog(weather.this);
+            progress.setTitle("Connecting");
+            progress.setMessage("Getting you the weather of " + city +" ...");
+            progress.show();
+
+            Runnable progressRunnable = new Runnable() {
+
+                @Override
+                public void run() {
+                    progress.cancel();
+                    end = true;
+                }
+            };
+
+            Handler pdCanceller = new Handler();
+            pdCanceller.postDelayed(progressRunnable, 4000);
+        }
+
     }
 
     class ExampleThread extends Thread {
@@ -187,11 +227,11 @@ public class weather extends AppCompatActivity {
                 results[5] = main.getString("humidity");
                 Log.i(TAG, response);
                 String[] finalResults = results;
-                Thread.sleep(4000);
+                //Thread.sleep(4000);
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-
                         temp.setText(finalResults[2]);
                         max.setText(finalResults[4]);
                         min.setText(finalResults[5]);
