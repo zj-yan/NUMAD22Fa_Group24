@@ -3,8 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.371" />
+        <entry key="app/src/main/res/drawable/ic_image_default.xml" value="0.3345" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.371" />
+        <entry key="app/src/main/res/drawable/reciver_shape.xml" value="0.3345" />
+        <entry key="app/src/main/res/drawable/sender_shape.xml" value="0.3345" />
+        <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.25937081659973227" />
+        <entry key="app/src/main/res/layout-w1240dp/item_user_row.xml" value="0.2650436401367187" />
+        <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.2459016393442623" />
+        <entry key="app/src/main/res/layout-w936dp/receiver_layout.xml" value="0.13831967213114754" />
+        <entry key="app/src/main/res/layout-w936dp/reciver_layout.xml" value="0.26804109090324935" />
+        <entry key="app/src/main/res/layout-w936dp/sender_layout.xml" value="0.17572463768115942" />
+        <entry key="app/src/main/res/layout/activity_about.xml" value="0.28349901282269024" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.23584734045940897" />
+        <entry key="app/src/main/res/layout/activity_contact.xml" value="0.2862569394318954" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.32608695652173914" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.3130123414855073" />
+        <entry key="app/src/main/res/layout/activity_registration.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_weather.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/item_receiver.xml" value="0.2463768115942029" />
+        <entry key="app/src/main/res/layout/item_sender.xml" value="0.2463768115942029" />
+        <entry key="app/src/main/res/layout/item_user.xml" value="0.2680760701497396" />
       </map>
     </option>
   </component>

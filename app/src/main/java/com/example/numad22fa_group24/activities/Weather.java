@@ -1,8 +1,7 @@
-package com.example.numad22fa_group24;
+package com.example.numad22fa_group24.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,18 +11,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.numad22fa_group24.R;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class weather extends AppCompatActivity {
+public class Weather extends AppCompatActivity {
 
     TextView temp, max, min, feelslike;
     EditText cityName;
@@ -166,7 +165,7 @@ public class weather extends AppCompatActivity {
 
         @Override
         public void run(){
-            final ProgressDialog progress = new ProgressDialog(weather.this);
+            final ProgressDialog progress = new ProgressDialog(Weather.this);
             progress.setTitle("Connecting");
             progress.setMessage("Getting you the weather of " + city +" ...");
             progress.show();
