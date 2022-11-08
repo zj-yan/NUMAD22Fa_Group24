@@ -17,12 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 
 public class MessageAdapter extends RecyclerView.Adapter {
-<<<<<<< HEAD
 
-=======
-//
-//    add addapter
->>>>>>> f4a153f8934744f761901c0f16ad8ebe5cdb5617
     Context context;
     List<Sticker> stickers;
 
