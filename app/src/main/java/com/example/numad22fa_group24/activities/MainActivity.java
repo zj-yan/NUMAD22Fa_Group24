@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
         Button about = findViewById(R.id.about_btn);
         about.setOnClickListener(view -> aboutActivity());
+
+        Button unworriedStore = findViewById(R.id.btn_unworried_store);
+        unworriedStore.setOnClickListener(view -> projectActivity());
     }
 
     private void weatherActivity() {
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void aboutActivity() {
         Intent intent = new Intent(this, AboutActivity.class);
+        startActivity(intent);
+    }
+
+    private void projectActivity() {
+        Intent intent = new Intent(this, com.example.numad22fa_group24.project.LoginActivity.class);
         startActivity(intent);
     }
 }
