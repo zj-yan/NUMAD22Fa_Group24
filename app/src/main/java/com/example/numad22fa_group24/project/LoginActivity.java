@@ -68,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     Utils.updateToken(firebaseAuth.getUid());
-                    startActivity(new Intent(this, WorryActivity.class));
+                    startActivity(new Intent(LoginActivity.this, WorryActivity.class));
                 } else {
                     Toast.makeText(this, "Error in login", Toast.LENGTH_SHORT).show();
                 }

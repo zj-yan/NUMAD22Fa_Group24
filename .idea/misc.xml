@@ -18,17 +18,24 @@
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.23584734045940897" />
         <entry key="app/src/main/res/layout/activity_chat2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_contact.xml" value="0.2862569394318954" />
-        <entry key="app/src/main/res/layout/activity_friend.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_friend.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.32608695652173914" />
         <entry key="app/src/main/res/layout/activity_login2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.21910212420035102" />
         <entry key="app/src/main/res/layout/activity_registration.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_registration2.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_store.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_weather.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/activity_worry.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_worry.xml" value="0.24923316860884173" />
+        <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_create.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_friends.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_store.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_receiver.xml" value="0.2463768115942029" />
         <entry key="app/src/main/res/layout/item_sender.xml" value="0.2463768115942029" />
         <entry key="app/src/main/res/layout/item_user.xml" value="0.2680760701497396" />
+        <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2490740740740741" />
       </map>
     </option>
   </component>
