@@ -109,11 +109,18 @@ public class StoreActivity extends AppCompatActivity {
     }
 
     private void connect(String userID) {
-        DatabaseReference ref = db.getReference()
-                .child("friends")
-                .child(Objects.requireNonNull(auth.getUid()));
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("placeholder", "placeholder");
+        String myID = auth.getUid();
+
+        DatabaseReference ref = db.getReference()
+                .child("friends")
+                .child(Objects.requireNonNull(myID));
         ref.child(userID).setValue(hashMap);
+
+        DatabaseReference ref2 = db.getReference()
+                .child("friends")
+                .child(userID);
+        ref2.child(myID).setValue(hashMap);
     }
 }
