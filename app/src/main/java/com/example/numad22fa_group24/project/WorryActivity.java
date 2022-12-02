@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +33,7 @@ public class WorryActivity extends AppCompatActivity {
 
     TextView myBottles;
     Button saveBtn;
+    Button deleteBtn;
     @SuppressLint("UseSwitchCompatOrMaterialCode")
     Switch publicSwitch;
     TextInputEditText editText;
@@ -67,6 +67,7 @@ public class WorryActivity extends AppCompatActivity {
         myBottles = findViewById(R.id.txt_my_bottles);
         editText = findViewById(R.id.input_worry);
         saveBtn = findViewById(R.id.btn_save);
+        deleteBtn = findViewById(R.id.btn_delete);
         publicSwitch = findViewById(R.id.switch_is_public);
 
         // update bottles when activity is initialized
@@ -83,15 +84,22 @@ public class WorryActivity extends AppCompatActivity {
             createBottle(newBottle);
         });
 
+        deleteBtn.setOnClickListener(view -> {
+            String bottleID = Objects.requireNonNull(editText.getText()).toString();
+            deleteBottle(bottleID);
+        });
+
     }
 
-    // create new bottle in firebase database
+    // create new bottle in firebase database and update bottle list
     public void createBottle(Bottle bottle) {
         // add new bottle to user-bottles table
         DatabaseReference ref1 = db.getReference()
                 .child("user-bottles")
                 .child(Objects.requireNonNull(auth.getUid()));
-        ref1.push().setValue(bottle).addOnCompleteListener(task -> {
+        String key = ref1.push().getKey();
+        bottle.setBottleID(key);
+        ref1.child(Objects.requireNonNull(key)).setValue(bottle).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Toast.makeText(WorryActivity.this, "failed to save new bottle", Toast.LENGTH_SHORT).show();
             } else {
@@ -101,7 +109,24 @@ public class WorryActivity extends AppCompatActivity {
 
         // add new bottle to bottles table
         DatabaseReference ref2 = db.getReference().child("bottles");
-        ref2.push().setValue(bottle);
+        ref2.child(key).setValue(bottle);
+    }
+
+    // delete bottle in firebase database and update bottle list
+    public void deleteBottle(String bottleID) {
+        if (bottleID.equals("")) return;
+        DatabaseReference ref = db.getReference()
+                .child("user-bottles")
+                .child(Objects.requireNonNull(auth.getUid()))
+                .child(bottleID);
+        ref.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                updateMyBottles();
+            }
+        });
+
+        DatabaseReference ref2 = db.getReference().child("bottles").child(bottleID);
+        ref2.removeValue();
     }
 
     // get my bottles from firebase database and update recycler view
