@@ -32,5 +32,15 @@ public class User {
     public String getStatus() {
         return status;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "uid='" + uid + '\'' +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", status='" + status + '\'' +
+                '}' + "\n";
+    }
 }
 

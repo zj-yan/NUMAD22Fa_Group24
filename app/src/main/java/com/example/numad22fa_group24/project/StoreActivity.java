@@ -20,6 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
 
@@ -96,11 +97,23 @@ public class StoreActivity extends AppCompatActivity {
                 }
                 // TODO: update bottles display
                 storeBottles.setText(bottles.toString());
+
+                // test connect
+                connect(bottles.get(10).getUserID());
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+    }
+
+    private void connect(String userID) {
+        DatabaseReference ref = db.getReference()
+                .child("friends")
+                .child(Objects.requireNonNull(auth.getUid()));
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("placeholder", "placeholder");
+        ref.child(userID).setValue(hashMap);
     }
 }
