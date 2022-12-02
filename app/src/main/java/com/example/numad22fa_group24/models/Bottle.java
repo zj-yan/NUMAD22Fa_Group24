@@ -65,11 +65,9 @@ public class Bottle {
 
     @Override
     public String toString() {
-        return "Bottle{" +
+        return  "\n" + "Bottle{" +
                 "bottleID='" + bottleID + '\'' +
-                ", userID='" + userID + '\'' +
-                ", content='" + content + '\'' +
-                ", isPublic=" + isPublic +
+                ", userID='" + userID +
                 '}';
     }
 
