@@ -2,18 +2,12 @@ package com.example.numad22fa_group24.project;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.numad22fa_group24.activities.ContactActivity;
-import com.example.numad22fa_group24.activities.RegistrationActivity;
 import com.example.numad22fa_group24.models.Bottle;
-import com.example.numad22fa_group24.models.User;
-import com.example.numad22fa_group24.util.Utils;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,33 +16,57 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 public class FirebaseAPI {
 
-
-    public static void createBottle(Bottle bottle, Context context) {
+    public static void createBottle(Bottle bottle) {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
-        DatabaseReference reference = db.getReference()
-                .child("bottles")
+
+        // add new bottle to user-bottles table
+        DatabaseReference ref1 = db.getReference()
+                .child("user-bottles")
                 .child(Objects.requireNonNull(auth.getUid()));
 
-        reference.push().setValue(bottle).addOnCompleteListener(task1 -> {
-            if (!task1.isSuccessful()) {
-                Toast.makeText(context, "Error in creating new bottle", Toast.LENGTH_SHORT).show();
-            } else {
-                // add new bottle to the bottle lists
+        ref1.push().setValue(bottle);
+
+        // add new bottle to bottles table
+        DatabaseReference ref2 = db.getReference().child("bottles");
+        ref2.push().setValue(bottle);
+    }
+
+    public static void deleteBottle(Bottle bottle) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference ref = db.getReference()
+                .child("user-bottles")
+                .child(Objects.requireNonNull(auth.getUid()));
+
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Bottle curr = dataSnapshot.getValue(Bottle.class);
+                    if (Objects.equals(curr, bottle)) {
+                        dataSnapshot.getRef().removeValue();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
     }
 
-    public static ArrayList<Bottle> readBottles() {
+    public static ArrayList<Bottle> getMyBottles() {
         ArrayList<Bottle> bottles = new ArrayList<>();
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference reference = db.getReference()
-                .child("bottles")
+                .child("user-bottles")
                 .child(Objects.requireNonNull(auth.getUid()));
 
         reference.addValueEventListener(new ValueEventListener() {
@@ -59,7 +77,6 @@ public class FirebaseAPI {
                     Bottle bottle = dataSnapshot.getValue(Bottle.class);
                     bottles.add(bottle);
                 }
-                // notify bottle adapter
             }
 
             @Override
@@ -69,4 +86,44 @@ public class FirebaseAPI {
 
         return bottles;
     }
+
+//    public static ArrayList<Bottle> getRandomBottles(int number) {
+//        ArrayList<Bottle> bottles = new ArrayList<>();
+//
+//        FirebaseAuth auth = FirebaseAuth.getInstance();
+//        FirebaseDatabase db = FirebaseDatabase.getInstance();
+//        DatabaseReference reference = db.getReference().child("bottles");
+//        String currUser = auth.getUid();
+//
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint("NotifyDataSetChanged")
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                int count = 0;
+//                Random random = new Random();
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    Bottle bottle = dataSnapshot.getValue(Bottle.class);
+//                    if (!bottle.getUserID().equals(currUser)) {
+//                        if (count < number) {
+//                            bottles.add(bottle);
+//                            count += 1;
+//                        } else {
+//                            boolean isTrue = random.nextBoolean();
+//                            int pos = random.nextInt(number);
+//                            if (isTrue) {
+//                                bottles.remove(pos);
+//                                bottles.add(bottle);
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+//
+//        return bottles;
+//    }
 }
