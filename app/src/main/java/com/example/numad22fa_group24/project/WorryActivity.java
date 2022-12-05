@@ -3,6 +3,7 @@ package com.example.numad22fa_group24.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -30,6 +31,7 @@ public class WorryActivity extends AppCompatActivity {
     ConstraintLayout createBtn;
     ConstraintLayout storeBtn;
     ConstraintLayout friendsBtn;
+    RecyclerView bottledisplay;
 
     TextView myBottles;
     Button saveBtn;
@@ -41,6 +43,8 @@ public class WorryActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase db;
 
+    private static final String TAG = "db";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +55,7 @@ public class WorryActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
 
         // navbar -- don't need to change
+        bottledisplay = findViewById(R.id.bottledisplay);
         createBtn = findViewById(R.id.btn_create);
         storeBtn = findViewById(R.id.btn_store);
         friendsBtn = findViewById(R.id.btn_friends);
