@@ -59,7 +59,7 @@ public class WorryActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
 
-       // bottles = new ArrayList<>();
+        // bottles = new ArrayList<>();
         // navbar -- don't need to change
         bottledisplay = findViewById(R.id.bottledisplay);
         bottledisplay.setLayoutManager(new LinearLayoutManager(this));

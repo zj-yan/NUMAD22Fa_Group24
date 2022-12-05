@@ -34,7 +34,7 @@ public class BottleAdapter extends RecyclerView.Adapter<BottleVH> {
 
     @Override
     public void onBindViewHolder(@NonNull BottleVH holder, int position) {
-        holder.bottleid.setText(list.get(position).getBottleID());
+       // holder.bottleid.setText(list.get(position).getBottleID());
         holder.bottlecontent.setText(list.get(position).getContent());
     }
 
@@ -54,7 +54,7 @@ class BottleVH extends RecyclerView.ViewHolder {
         super(itemView);
 
         bottleLayout = itemView.findViewById(R.id.itemId);
-        bottleid = itemView.findViewById(R.id.bottleid);
+        //bottleid = itemView.findViewById(R.id.bottleid);
         bottlecontent = itemView.findViewById(R.id.bottlecontent);
 
     }
