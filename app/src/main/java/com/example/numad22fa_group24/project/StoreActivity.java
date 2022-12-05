@@ -3,6 +3,8 @@ package com.example.numad22fa_group24.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.numad22fa_group24.R;
+import com.example.numad22fa_group24.adapters.BottleAdapter;
 import com.example.numad22fa_group24.models.Bottle;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,6 +32,8 @@ public class StoreActivity extends AppCompatActivity {
     ConstraintLayout createBtn;
     ConstraintLayout storeBtn;
     ConstraintLayout friendsBtn;
+    RecyclerView storedisplay;
+    BottleAdapter bottleAdapter;
 
     Button refreshBtn;
     TextView storeBottles;
@@ -46,6 +51,9 @@ public class StoreActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
 
+        storedisplay = findViewById(R.id.storedisplay);
+        storedisplay.setLayoutManager(new LinearLayoutManager(this));
+
         // navbar - don't change
         createBtn = findViewById(R.id.btn_create);
         storeBtn = findViewById(R.id.btn_store);
@@ -59,7 +67,7 @@ public class StoreActivity extends AppCompatActivity {
 
         // test ui
         refreshBtn = findViewById(R.id.btn_refresh);
-        storeBottles = findViewById(R.id.txt_store_bottles);
+        //storeBottles = findViewById(R.id.txt_store_bottles);
 
         // display bottles
         refreshBottles();
@@ -96,7 +104,9 @@ public class StoreActivity extends AppCompatActivity {
                     }
                 }
                 // TODO: update bottles display
-                storeBottles.setText(bottles.toString());
+               // storeBottles.setText(bottles.toString());
+                bottleAdapter = new BottleAdapter(bottles, StoreActivity.this);
+                storedisplay.setAdapter(bottleAdapter);
 
                 // test connect
                 connect(bottles.get(10).getUserID());
@@ -123,4 +133,6 @@ public class StoreActivity extends AppCompatActivity {
                 .child(userID);
         ref2.child(myID).setValue(hashMap);
     }
+
+
 }

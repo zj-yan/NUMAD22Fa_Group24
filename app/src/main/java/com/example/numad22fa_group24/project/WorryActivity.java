@@ -3,17 +3,20 @@ package com.example.numad22fa_group24.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.numad22fa_group24.R;
+import com.example.numad22fa_group24.adapters.BottleAdapter;
 import com.example.numad22fa_group24.models.Bottle;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,6 +35,8 @@ public class WorryActivity extends AppCompatActivity {
     ConstraintLayout storeBtn;
     ConstraintLayout friendsBtn;
     RecyclerView bottledisplay;
+    BottleAdapter bottleAdapter;
+//    ArrayList<Bottle> bottles;
 
     TextView myBottles;
     Button saveBtn;
@@ -54,9 +59,12 @@ public class WorryActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
 
+       // bottles = new ArrayList<>();
         // navbar -- don't need to change
         bottledisplay = findViewById(R.id.bottledisplay);
+        bottledisplay.setLayoutManager(new LinearLayoutManager(this));
         createBtn = findViewById(R.id.btn_create);
+
         storeBtn = findViewById(R.id.btn_store);
         friendsBtn = findViewById(R.id.btn_friends);
         storeBtn.setOnClickListener(view -> {
@@ -69,7 +77,9 @@ public class WorryActivity extends AppCompatActivity {
         // TODO: add recycler view for bottles, code below can be changed
 
         // ui for test -- can be deleted
-        myBottles = findViewById(R.id.txt_my_bottles);
+        //myBottles = findViewById(R.id.txt_my_bottles);
+
+
         editText = findViewById(R.id.input_worry);
         saveBtn = findViewById(R.id.btn_save);
         deleteBtn = findViewById(R.id.btn_delete);
@@ -77,6 +87,7 @@ public class WorryActivity extends AppCompatActivity {
 
         // update bottles when activity is initialized
         updateMyBottles();
+
 
         // get switch status
         final boolean[] isPublic = {false};
@@ -148,10 +159,16 @@ public class WorryActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Bottle bottle = dataSnapshot.getValue(Bottle.class);
                     bottles.add(bottle);
+                    Log.i(TAG, String.valueOf(bottle.getContent()));
+
                 }
 
                 // TODO: update recycler view
-                myBottles.setText(bottles.toString());
+                bottleAdapter = new BottleAdapter(bottles, WorryActivity.this);
+                bottledisplay.setAdapter(bottleAdapter);
+//                myBottles.setText(bottles.toString());
+
+
             }
 
             @Override
