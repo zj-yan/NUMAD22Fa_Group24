@@ -131,8 +131,8 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/storedisplay"
-        android:layout_width="471dp"
-        android:layout_height="587dp"
+        android:layout_width="460dp"
+        android:layout_height="597dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_refresh"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

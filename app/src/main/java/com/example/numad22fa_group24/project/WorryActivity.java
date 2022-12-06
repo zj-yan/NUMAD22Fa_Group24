@@ -3,14 +3,18 @@ package com.example.numad22fa_group24.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +22,8 @@ import android.widget.Toast;
 import com.example.numad22fa_group24.R;
 import com.example.numad22fa_group24.adapters.BottleAdapter;
 import com.example.numad22fa_group24.models.Bottle;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -36,6 +42,9 @@ public class WorryActivity extends AppCompatActivity {
     ConstraintLayout friendsBtn;
     RecyclerView bottledisplay;
     BottleAdapter bottleAdapter;
+    FloatingActionButton add;
+
+    ArrayList<Bottle> bottles;
 //    ArrayList<Bottle> bottles;
 
     TextView myBottles;
@@ -59,11 +68,14 @@ public class WorryActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
 
+        bottles = new ArrayList<>();
+
+        add = findViewById(R.id.addButton);
         // bottles = new ArrayList<>();
         // navbar -- don't need to change
         bottledisplay = findViewById(R.id.bottledisplay);
         bottledisplay.setLayoutManager(new LinearLayoutManager(this));
-        createBtn = findViewById(R.id.btn_create);
+        //createBtn = findViewById(R.id.btn_create);
 
         storeBtn = findViewById(R.id.btn_store);
         friendsBtn = findViewById(R.id.btn_friends);
@@ -80,31 +92,95 @@ public class WorryActivity extends AppCompatActivity {
         //myBottles = findViewById(R.id.txt_my_bottles);
 
 
-        editText = findViewById(R.id.input_worry);
-        saveBtn = findViewById(R.id.btn_save);
-        deleteBtn = findViewById(R.id.btn_delete);
-        publicSwitch = findViewById(R.id.switch_is_public);
+
+        //editText = findViewById(R.id.input_worry);
+        //saveBtn = findViewById(R.id.btn_save);
+        //deleteBtn = findViewById(R.id.btn_delete);
+        //publicSwitch = findViewById(R.id.switch_is_public);
 
         // update bottles when activity is initialized
-        updateMyBottles();
 
+
+
+
+
+        ItemTouchHelper.SimpleCallback itemtouch = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder,
+                                  @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                String id = bottles.get(viewHolder.getAdapterPosition()).getBottleID();
+                deleteBottle(id);
+                bottles.remove(viewHolder.getAdapterPosition());
+
+                bottles.clear();
+                bottleAdapter.notifyDataSetChanged();
+                Log.i(TAG, id);
+
+                Snackbar snackbar = Snackbar.make
+                        (bottledisplay, "Bottle deleted!", Snackbar.LENGTH_LONG);
+                snackbar.show();
+                //updateMyBottles();
+            }
+        };
+
+        new ItemTouchHelper(itemtouch).attachToRecyclerView(bottledisplay);
 
         // get switch status
-        final boolean[] isPublic = {false};
-        publicSwitch.setOnCheckedChangeListener((compoundButton, b) -> isPublic[0] = b);
+//        final boolean[] isPublic = {false};
+        //publicSwitch.setOnCheckedChangeListener((compoundButton, b) -> isPublic[0] = b);
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addBottle();
+              //  updateMyBottles();
+            }
+        });
+        updateMyBottles();
         // save new bottle
-        saveBtn.setOnClickListener(view -> {
-            String content = Objects.requireNonNull(editText.getText()).toString();
-            Bottle newBottle = new Bottle(auth.getUid(), content, isPublic[0]);
-            createBottle(newBottle);
-        });
+//        saveBtn.setOnClickListener(view -> {
+//            String content = Objects.requireNonNull(editText.getText()).toString();
+//            Bottle newBottle = new Bottle(auth.getUid(), content, isPublic[0]);
+//            createBottle(newBottle);
+//        });
+//
+//        deleteBtn.setOnClickListener(view -> {
+//            String bottleID = Objects.requireNonNull(editText.getText()).toString();
+//            deleteBottle(bottleID);
+//        });
 
-        deleteBtn.setOnClickListener(view -> {
-            String bottleID = Objects.requireNonNull(editText.getText()).toString();
-            deleteBottle(bottleID);
-        });
+    }
 
+    private void addBottle() {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.item_create);
+        EditText content = dialog.findViewById(R.id.input_worry);
+        Button save = dialog.findViewById(R.id.btn_save);
+        save.setOnClickListener((view) -> {
+
+                if(content.getText().toString().length() > 0){
+                    Bottle newBottle = new Bottle(auth.getUid(), content.getText().toString(), true);
+                    createBottle(newBottle);
+                    //bottles.add(newBottle);
+                   // updateMyBottles();
+                    Log.i("Bottle", newBottle.getContent());
+                }
+
+
+               dialog.dismiss();
+
+
+            bottles.clear();
+            bottleAdapter.notifyDataSetChanged();
+        });
+//        Bottle newBottle = new Bottle(auth.getUid(), content.toString(), true);
+//        createBottle(newBottle);
+        dialog.show();
     }
 
     // create new bottle in firebase database and update bottle list
@@ -118,9 +194,8 @@ public class WorryActivity extends AppCompatActivity {
         ref1.child(Objects.requireNonNull(key)).setValue(bottle).addOnCompleteListener(task -> {
             if (!task.isSuccessful()) {
                 Toast.makeText(WorryActivity.this, "failed to save new bottle", Toast.LENGTH_SHORT).show();
-            } else {
-                updateMyBottles();
             }
+
         });
 
         // add new bottle to bottles table
@@ -136,21 +211,26 @@ public class WorryActivity extends AppCompatActivity {
                 .child(Objects.requireNonNull(auth.getUid()))
                 .child(bottleID);
         ref.removeValue().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                updateMyBottles();
-            }
+
         });
 
         DatabaseReference ref2 = db.getReference().child("bottles").child(bottleID);
         ref2.removeValue();
     }
 
+
+
+
     // get my bottles from firebase database and update recycler view
     public void updateMyBottles() {
-        ArrayList<Bottle> bottles = new ArrayList<>();
+        bottledisplay.setAdapter(null);
+        bottles = new ArrayList<>();
+
         DatabaseReference reference = db.getReference()
                 .child("user-bottles")
                 .child(Objects.requireNonNull(auth.getUid()));
+
+
 
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -159,7 +239,7 @@ public class WorryActivity extends AppCompatActivity {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Bottle bottle = dataSnapshot.getValue(Bottle.class);
                     bottles.add(bottle);
-                    Log.i(TAG, String.valueOf(bottle.getContent()));
+                   // Log.i(TAG, String.valueOf(bottle.getContent()));
 
                 }
 

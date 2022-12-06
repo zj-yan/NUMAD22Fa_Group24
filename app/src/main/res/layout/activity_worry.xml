@@ -9,14 +9,14 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bottledisplay"
-        android:layout_width="411dp"
-        android:layout_height="338dp"
-        app:layout_constraintBottom_toTopOf="@+id/input_worry"
+        android:layout_width="406dp"
+        android:layout_height="595dp"
+        android:layout_marginTop="32dp"
+        android:scrollbars="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:scrollbars="vertical" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/divider2"
@@ -131,47 +131,29 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/btn_save"
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="save"
+        android:clickable="true"
         app:layout_constraintBottom_toTopOf="@+id/divider2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintHorizontal_bias="0.954"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_is_public" />
+        app:layout_constraintTop_toBottomOf="@+id/bottledisplay"
+        app:layout_constraintVertical_bias="0.876"
+        app:srcCompat="@drawable/ic_baseline_create_24" />
 
-    <Switch
-        android:id="@+id/switch_is_public"
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="public"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/input_worry" />
-
-    <Button
-        android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="delete"
-        app:layout_constraintBottom_toTopOf="@+id/divider2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.8"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/switch_is_public" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/input_worry"
-        android:layout_width="313dp"
-        android:layout_height="66dp"
-        android:hint="write your worries"
-        app:layout_constraintBottom_toTopOf="@+id/switch_is_public"
+        android:text="My Bottles"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottledisplay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottledisplay" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

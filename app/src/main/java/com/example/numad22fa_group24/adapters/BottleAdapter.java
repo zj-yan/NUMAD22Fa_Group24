@@ -57,6 +57,7 @@ class BottleVH extends RecyclerView.ViewHolder {
         //bottleid = itemView.findViewById(R.id.bottleid);
         bottlecontent = itemView.findViewById(R.id.bottlecontent);
 
+
     }
     public BottleVH bindAdapter(BottleAdapter adapter){
         this.adapter = adapter;
