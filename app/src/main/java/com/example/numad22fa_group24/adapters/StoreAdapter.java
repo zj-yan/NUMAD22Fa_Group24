@@ -1,6 +1,6 @@
 package com.example.numad22fa_group24.adapters;
 
-
+import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,25 +16,24 @@ import com.example.numad22fa_group24.models.Bottle;
 
 import java.util.List;
 
-public class BottleAdapter extends RecyclerView.Adapter<BottleVH> {
-
+public class StoreAdapter extends RecyclerView.Adapter<StoreVH>{
     List<Bottle> list;
 
-    public BottleAdapter(List<Bottle> list, Context context){
+    public StoreAdapter(List<Bottle> list, Context context){
         this.list = list;
     }
 
     @NonNull
     @Override
-    public BottleVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public StoreVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bottle, parent, false);
-        BottleVH holder = new BottleVH(view);
+
+        StoreVH holder = new StoreVH(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BottleVH holder, int position) {
-        // holder.bottleid.setText(list.get(position).getBottleID());
+    public void onBindViewHolder(@NonNull StoreVH holder, int position) {
         holder.bottlecontent.setText(list.get(position).getContent());
     }
 
@@ -44,22 +43,23 @@ public class BottleAdapter extends RecyclerView.Adapter<BottleVH> {
     }
 }
 
-class BottleVH extends RecyclerView.ViewHolder {
+
+class StoreVH extends RecyclerView.ViewHolder {
     TextView bottleid;
     TextView bottlecontent;
     ConstraintLayout bottleLayout;
+    ConstraintLayout storeLayout;
 
-    private BottleAdapter adapter;
-    public BottleVH(@NonNull View itemView) {
+    private StoreAdapter adapter;
+    public StoreVH(@NonNull View itemView) {
         super(itemView);
 
         bottleLayout = itemView.findViewById(R.id.itemId);
-        //bottleid = itemView.findViewById(R.id.bottleid);
         bottlecontent = itemView.findViewById(R.id.bottlecontent);
-
-
+        storeLayout = itemView.findViewById(R.id.storeItemLayout);
     }
-    public BottleVH bindAdapter(BottleAdapter adapter){
+
+    public StoreVH bindAdapter(StoreAdapter adapter){
         this.adapter = adapter;
         return this;
     }

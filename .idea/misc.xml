@@ -37,8 +37,10 @@
         <entry key="app/src/main/res/layout/item_create.xml" value="0.335" />
         <entry key="app/src/main/res/layout/item_receiver.xml" value="0.2463768115942029" />
         <entry key="app/src/main/res/layout/item_sender.xml" value="0.2463768115942029" />
+        <entry key="app/src/main/res/layout/item_store.xml" value="0.375" />
         <entry key="app/src/main/res/layout/item_user.xml" value="0.2680760701497396" />
         <entry key="app/src/main/res/layout/layout_dialog.xml" value="0.13627152988855115" />
+        <entry key="app/src/main/res/layout/store.xml" value="0.16621376811594202" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.2490740740740741" />
       </map>
     </option>

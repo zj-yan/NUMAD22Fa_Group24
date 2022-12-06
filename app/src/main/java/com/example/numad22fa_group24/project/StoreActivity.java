@@ -7,20 +7,27 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.numad22fa_group24.R;
-import com.example.numad22fa_group24.adapters.BottleAdapter;
+import com.example.numad22fa_group24.adapters.StoreAdapter;
 import com.example.numad22fa_group24.models.Bottle;
+import com.example.numad22fa_group24.util.RecyclerItemClickListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,8 +39,9 @@ public class StoreActivity extends AppCompatActivity {
     ConstraintLayout createBtn;
     ConstraintLayout storeBtn;
     ConstraintLayout friendsBtn;
-    RecyclerView storedisplay;
-    BottleAdapter bottleAdapter;
+    RecyclerView storeDisplay;
+    StoreAdapter storeAdapter;
+    ArrayList<Bottle> bottles = new ArrayList<>();
 
     Button refreshBtn;
     TextView storeBottles;
@@ -51,8 +59,48 @@ public class StoreActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
 
-        storedisplay = findViewById(R.id.storedisplay);
-        storedisplay.setLayoutManager(new LinearLayoutManager(this));
+        storeDisplay = findViewById(R.id.storedisplay);
+        storeDisplay.setLayoutManager(new LinearLayoutManager(this));
+        storeDisplay.addOnItemTouchListener(new RecyclerItemClickListener(this, storeDisplay,
+                new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Bottle current = bottles.get(position);
+                        String userId = bottles.get(position).getUserID();
+                        //connect(userId);
+                        Dialog dialog = new Dialog(StoreActivity.this);
+                        dialog.setContentView(R.layout.item_store);
+
+
+                        TextView friendContent = dialog.findViewById(R.id.friendContent);
+                        Button connectButton = dialog.findViewById(R.id.connect);
+                        Log.i("Bottle", friendContent.toString());
+
+                       // friendContent.setText("1");
+//                        friendId.setText(current.getUserID());
+                        friendContent.setText(current.getContent());
+
+                        connectButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Snackbar snackbar = Snackbar.make
+                                        (storeDisplay, "Connect with friend!",
+                                                Snackbar.LENGTH_SHORT);
+                                snackbar.show();
+                                dialog.dismiss();
+                            }
+                        });
+                        dialog.show();
+
+
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+
+                    }
+                }));
+
 
         // navbar - don't change
         createBtn = findViewById(R.id.btn_create);
@@ -76,12 +124,13 @@ public class StoreActivity extends AppCompatActivity {
         refreshBtn.setOnClickListener(view -> {
             refreshBottles();
         });
+
     }
 
     private void refreshBottles() {
         DatabaseReference reference = db.getReference().child("bottles");
         String currUser = auth.getUid();
-        ArrayList<Bottle> bottles = new ArrayList<>();
+        //ArrayList<Bottle> bottles = new ArrayList<>();
 
         reference.addValueEventListener(new ValueEventListener() {
             @SuppressLint("NotifyDataSetChanged")
@@ -105,8 +154,8 @@ public class StoreActivity extends AppCompatActivity {
                 }
                 // TODO: update bottles display
                // storeBottles.setText(bottles.toString());
-                bottleAdapter = new BottleAdapter(bottles, StoreActivity.this);
-                storedisplay.setAdapter(bottleAdapter);
+                storeAdapter = new StoreAdapter(bottles, StoreActivity.this);
+                storeDisplay.setAdapter(storeAdapter);
 
                 // test connect
                 connect(bottles.get(10).getUserID());
