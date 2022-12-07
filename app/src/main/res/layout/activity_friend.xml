@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".project.FriendActivity">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/frienddisplay"
+        android:layout_width="406dp"
+        android:layout_height="595dp"
+        android:layout_marginTop="32dp"
+        android:scrollbars="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
@@ -123,8 +134,9 @@
         android:id="@+id/txt_friend_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/navbar"
+        android:text="Friends List"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/frienddisplay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

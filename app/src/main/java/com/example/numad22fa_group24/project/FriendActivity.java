@@ -3,12 +3,18 @@ package com.example.numad22fa_group24.project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.numad22fa_group24.R;
+import com.example.numad22fa_group24.adapters.BottleAdapter;
+import com.example.numad22fa_group24.adapters.FriendAdapter;
+import com.example.numad22fa_group24.models.Bottle;
 import com.example.numad22fa_group24.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -31,6 +37,10 @@ public class FriendActivity extends AppCompatActivity {
     FirebaseAuth auth;
     FirebaseDatabase db;
 
+    RecyclerView frienddisplay;
+    FriendAdapter friendAdapter;
+    ArrayList<User> friends;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +48,10 @@ public class FriendActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseDatabase.getInstance();
+
+        friends = new ArrayList<>();
+        frienddisplay = findViewById(R.id.frienddisplay);
+        frienddisplay.setLayoutManager(new LinearLayoutManager(this));
 
         // navbar - don't change
         createBtn = findViewById(R.id.btn_create);
@@ -51,10 +65,9 @@ public class FriendActivity extends AppCompatActivity {
         });
 
         // test ui
-        friendList = findViewById(R.id.txt_friend_list);
+        frienddisplay = findViewById(R.id.frienddisplay);
         getFriendList();
     }
-
     private void getFriendList() {
         DatabaseReference ref = db.getReference().child("friends").child(Objects.requireNonNull(auth.getUid()));
         ref.addValueEventListener(new ValueEventListener() {
@@ -71,7 +84,9 @@ public class FriendActivity extends AppCompatActivity {
                             friends.add(user);
 
                             // TODO: display friend list
-                            friendList.setText(friends.toString());
+                            friendAdapter = new FriendAdapter(friends, FriendActivity.this);
+                            frienddisplay.setAdapter(friendAdapter);
+//                            friendList.setText(friends.toString());
                         }
 
                         @Override
@@ -89,4 +104,39 @@ public class FriendActivity extends AppCompatActivity {
         });
 
     }
+
+//    public void updateMyFriends() {
+//        frienddisplay.setAdapter(null);
+//        friends = new ArrayList<>();
+//
+//        DatabaseReference reference = db.getReference()
+//                .child("user-bottles")
+//                .child(Objects.requireNonNull(auth.getUid()));
+//
+//
+//
+//        reference.addValueEventListener(new ValueEventListener() {
+//            @SuppressLint("NotifyDataSetChanged")
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    Bottle bottle = dataSnapshot.getValue(Bottle.class);
+//                    bottles.add(bottle);
+//                    // Log.i(TAG, String.valueOf(bottle.getContent()));
+//
+//                }
+//
+//                // TODO: update recycler view
+//                bottleAdapter = new BottleAdapter(bottles, WorryActivity.this);
+//                bottledisplay.setAdapter(bottleAdapter);
+////                myBottles.setText(bottles.toString());
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+//    }
 }
