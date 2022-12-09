@@ -70,7 +70,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent)
                 .setSmallIcon(R.drawable.ic_account)
-                .setLargeIcon(bitmap)
+//                .setLargeIcon(bitmap)
                 .setAutoCancel(true);
 
         notificationManager.notify(999, notificationBuilder.build());

@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.numad22fa_group24.R;
-import com.example.numad22fa_group24.adapters.MessageAdapter;
+import com.example.numad22fa_group24.adapters.StickerAdapter;
 import com.example.numad22fa_group24.models.Sticker;
 import com.example.numad22fa_group24.models.User;
 import com.example.numad22fa_group24.notification.MyResponse;
@@ -51,7 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     FirebaseDatabase firebaseDatabase;
 
     RecyclerView recyclerView;
-    MessageAdapter adapter;
+    StickerAdapter adapter;
 
     List<Sticker> stickers = new ArrayList<>();
 
@@ -100,7 +100,7 @@ public class ChatActivity extends AppCompatActivity {
 
         // set up recycler view
         recyclerView = findViewById(R.id.message_list);
-        adapter = new MessageAdapter(ChatActivity.this, stickers);
+        adapter = new StickerAdapter(ChatActivity.this, stickers);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);

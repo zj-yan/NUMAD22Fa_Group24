@@ -1,6 +1,7 @@
 package com.example.numad22fa_group24.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.numad22fa_group24.R;
+import com.example.numad22fa_group24.project.ChatActivity;
 import com.example.numad22fa_group24.models.User;
 
 import java.util.List;
@@ -18,8 +20,10 @@ import java.util.List;
 public class FriendAdapter extends RecyclerView.Adapter<FriendVH>{
 
     List<User> list;
+    Context friendActivity;
     public FriendAdapter(List<User> list, Context context){
         this.list = list;
+        this.friendActivity = context;
     }
 
     @NonNull
@@ -33,8 +37,16 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendVH>{
 
     @Override
     public void onBindViewHolder(@NonNull FriendVH holder, int position) {
-        holder.friendname.setText(list.get(position).getUsername());
-        holder.friendstatus.setText(list.get(position).getStatus());
+        User user = list.get(position);
+        holder.friendname.setText(user.getUsername());
+        holder.friendstatus.setText(user.getStatus());
+
+        holder.itemView.setOnClickListener(view -> {
+            Intent intent = new Intent(friendActivity, ChatActivity.class);
+            intent.putExtra("username", user.getUsername());
+            intent.putExtra("userid", user.getUid());
+            friendActivity.startActivity(intent);
+        });
     }
 
     @Override
