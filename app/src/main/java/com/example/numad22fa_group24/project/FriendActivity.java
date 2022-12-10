@@ -6,16 +6,15 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.numad22fa_group24.R;
-import com.example.numad22fa_group24.adapters.BottleAdapter;
 import com.example.numad22fa_group24.adapters.FriendAdapter;
-import com.example.numad22fa_group24.models.Bottle;
 import com.example.numad22fa_group24.models.User;
+import com.example.numad22fa_group24.util.Utils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,6 +30,8 @@ public class FriendActivity extends AppCompatActivity {
     ConstraintLayout createBtn;
     ConstraintLayout storeBtn;
     ConstraintLayout friendsBtn;
+
+    ImageView btnLogout;
 
     TextView friendList;
 
@@ -67,6 +68,11 @@ public class FriendActivity extends AppCompatActivity {
         // test ui
         frienddisplay = findViewById(R.id.frienddisplay);
         getFriendList();
+
+        btnLogout = findViewById(R.id.btn_logout);
+        btnLogout.setOnClickListener(view -> {
+            logout();
+        });
     }
     private void getFriendList() {
         DatabaseReference ref = db.getReference().child("friends").child(Objects.requireNonNull(auth.getUid()));
@@ -103,6 +109,12 @@ public class FriendActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void logout() {
+        Utils.signOut();
+        startActivity(new Intent(FriendActivity.this, LoginActivity.class));
+        FriendActivity.this.finish();
     }
 
 //    public void updateMyFriends() {
