@@ -10,7 +10,7 @@
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/design_default_color_primary"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -24,31 +24,25 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="15dp"
-                android:src="@drawable/ic_arrow_back" />
-
-            <ImageView
-                android:id="@+id/user_img"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_account"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
+                android:src="@drawable/ic_arrow_back"
+                app:tint="@color/black"/>
 
             <TextView
                 android:id="@+id/receiver_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:textColor="@color/white"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
                 android:text="Username"
+                android:fontFamily="@font/dancing_script"
                 android:textSize="24sp" />
 
         </LinearLayout>
 
     </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_list2"
@@ -56,7 +50,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/edit_view"
         android:layout_below="@+id/header"
-        android:background="@color/light_gray" />
+        android:background="@color/background_gray" />
 
     <LinearLayout
         android:id="@+id/edit_view"
@@ -85,5 +79,28 @@
             app:tint="@color/gray"
             app:srcCompat="@drawable/ic_baseline_send_24" />
     </LinearLayout>
+
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_alignBottom="@+id/header"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/message_list2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@+id/message_list2"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toTopOf="@+id/edit_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/message_list2" />
 
 </RelativeLayout>

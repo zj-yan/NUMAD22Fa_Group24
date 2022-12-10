@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/storeItemLayout"
         android:layout_width="346dp"
-        android:layout_height="267dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
@@ -23,7 +23,7 @@
         <TextView
             android:id="@+id/friendContent"
             android:layout_width="230dp"
-            android:layout_height="101dp"
+            android:layout_height="wrap_content"
             android:padding="15dp"
             android:text="bottle content"
             android:textColor="@color/purple_500"

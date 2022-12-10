@@ -13,4 +13,5 @@
     <color name="background_gray">#F9F9F9</color>
     <color name="gray">#797979</color>
     <color name="icon">#FF6200EE</color>
+    <color name="background">#faf9f5</color>
 </resources>

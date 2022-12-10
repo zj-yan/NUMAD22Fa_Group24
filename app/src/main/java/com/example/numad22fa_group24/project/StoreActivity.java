@@ -19,6 +19,7 @@ import com.example.numad22fa_group24.R;
 import com.example.numad22fa_group24.adapters.StoreAdapter;
 import com.example.numad22fa_group24.models.Bottle;
 import com.example.numad22fa_group24.util.RecyclerItemClickListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -43,13 +44,13 @@ public class StoreActivity extends AppCompatActivity {
     StoreAdapter storeAdapter;
     ArrayList<Bottle> bottles = new ArrayList<>();
 
-    Button refreshBtn;
+    FloatingActionButton refreshBtn;
     TextView storeBottles;
 
     FirebaseAuth auth;
     FirebaseDatabase db;
 
-    private static final int BOTTLE_NUM = 16;
+    private static final int BOTTLE_NUM = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,7 @@ public class StoreActivity extends AppCompatActivity {
                         connectButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
+                                connect(userId);
                                 Snackbar snackbar = Snackbar.make
                                         (storeDisplay, "Connect with friend!",
                                                 Snackbar.LENGTH_SHORT);
@@ -156,9 +158,6 @@ public class StoreActivity extends AppCompatActivity {
                // storeBottles.setText(bottles.toString());
                 storeAdapter = new StoreAdapter(bottles, StoreActivity.this);
                 storeDisplay.setAdapter(storeAdapter);
-
-                // test connect
-                connect(bottles.get(10).getUserID());
             }
 
             @Override

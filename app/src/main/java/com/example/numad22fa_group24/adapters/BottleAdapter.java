@@ -27,7 +27,7 @@ public class BottleAdapter extends RecyclerView.Adapter<BottleVH> {
     @NonNull
     @Override
     public BottleVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_bottle, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_letter, parent, false);
         BottleVH holder = new BottleVH(view);
         return holder;
     }
@@ -53,7 +53,7 @@ class BottleVH extends RecyclerView.ViewHolder {
     public BottleVH(@NonNull View itemView) {
         super(itemView);
 
-        bottleLayout = itemView.findViewById(R.id.itemId);
+        bottleLayout = itemView.findViewById(R.id.letterItem);
         //bottleid = itemView.findViewById(R.id.bottleid);
         bottlecontent = itemView.findViewById(R.id.bottlecontent);
 

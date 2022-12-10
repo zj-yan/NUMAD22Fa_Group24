@@ -20,6 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="12dp"
+            android:text="I am good"
+            android:textColor="@color/black"
             android:background="@drawable/receiver_shape"
             android:backgroundTint="@color/white" />
 
@@ -46,8 +48,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="12dp"
+            android:text="I am good"
             android:textColor="@color/white"
-            android:background="@drawable/sender_shape" />
+            android:background="@drawable/sender_shape"
+            android:backgroundTint="@color/black"/>
 
         <TextView
             android:id="@+id/tvSentMessageTime"

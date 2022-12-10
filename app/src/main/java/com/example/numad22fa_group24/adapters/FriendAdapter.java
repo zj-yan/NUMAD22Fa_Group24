@@ -39,7 +39,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendVH>{
     public void onBindViewHolder(@NonNull FriendVH holder, int position) {
         User user = list.get(position);
         holder.friendname.setText(user.getUsername());
-        holder.friendstatus.setText(user.getStatus());
+//        holder.friendstatus.setText(user.getStatus());
 
         holder.itemView.setOnClickListener(view -> {
             Intent intent = new Intent(friendActivity, ChatActivity.class);
@@ -66,7 +66,7 @@ class FriendVH extends RecyclerView.ViewHolder {
 
         friendLayout = itemView.findViewById(R.id.oneLineFriendLayout);
         friendname = itemView.findViewById(R.id.friend_name);
-        friendstatus = itemView.findViewById(R.id.friend_status);
+//        friendstatus = itemView.findViewById(R.id.friend_status);
     }
 
     public FriendVH bindAdapter(FriendAdapter adapter){
